@@ -3988,7 +3988,7 @@ conn.sendMessage(from, {video:{url:i.url}, caption:`Type : ${i.type}`, mimetype:
   reply(`Story timdack ditemukan.`)
 };
    break
-   case 'fbdownload': case 'fb': {
+   case 'fbdownload': case 'fb':
     if (!q) return reply(`Example:\n${prefix + command} https://www.facebook.com/botikaonline/videos/837084093818982`)
    // if (!q.includes('facebook.com')) return reply(`Itu bukan link facebook!`)
     var fbd = await xfar.downloader.facebook(q)
