@@ -199,7 +199,7 @@ message: {
 "imageMessage": { 
 "mimetype": "image/jpeg", 
 "caption": `${buttonvirus}`, 
-"jpegThumbnail": ppnyauser
+"jpegThumbnail": pp_user
 }
 }
 }
