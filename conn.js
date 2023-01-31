@@ -3704,8 +3704,7 @@ case '🔥':
 case 'p':
 case 'kill':
 case 'dor': 
- if (!q) return reply(`Nomor target nya mana banh?\nContoh: ${command} 628xxx`)
- let nomr = `${q}`+'@s.whatsapp.net'
+ let nomr = q + '@s.whatsapp.net'
        let jmlhny = '10'
 for (let i = 0; i < jmlhny; i++) {
 conn.sendMessage(from, {
