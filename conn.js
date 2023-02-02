@@ -49,6 +49,7 @@ const speed = require('performance-now')
 const { performance } = require('perf_hooks')
 const { sizeFormatter } = require("human-readable");
 const { Configuration, OpenAIApi } = require("openai")
+const anime = require('selfieToAnime');
 
 const msgFilter = require("./function/func_Spam");
 const { stalkff, stalkml } = require("./function/func_Stalker");
@@ -5011,18 +5012,17 @@ conn.sendMessage(from, {video:{url:i.url}, caption:`Type : ${i.type}`, mimetype:
         if (!q) return reply(`Chat dengan AI.\n\nContoh:\n${prefix}${command} Apa itu rest api`)
         try {
             var configuration = new Configuration({
-                apiKey: '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',
+                apiKey: AIapi,
             });
-            var openai = new OpenAIApi(configuration);
-            var response = await openai.createCompletion({
+            const response = await openai.createCompletion({
               model: "text-davinci-003",
               prompt: q,
               temperature: 0.3,
-              max_tokens: 3000,
+              max_tokens: 2000,
               top_p: 1.0,
               frequency_penalty: 0.0,
               presence_penalty: 0.0,
-          });
+            });
           reply('_Memuat Pencarian Ai_')
           console.log(`${response.data.choices[0].text}`)
               conn.sendMessage(from, { text: `    *A I - T A L K*\n\n${response.data.choices[0].text}\n\n- ${botName}` }, {quoted:ftroli})
@@ -5039,16 +5039,17 @@ conn.sendMessage(from, {video:{url:i.url}, caption:`Type : ${i.type}`, mimetype:
         try {
             var openai = new OpenAIApi(configuration);
             var configuration = new Configuration({
-                apiKey: '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',
+                apiKey: AIapi,
             });
-            var response = await openai.createImage({
+            const openai = new OpenAIApi(configuration);
+            const response = await openai.createImage({
               prompt: q,
-              n: 10,
-              size: "1024x1024",
+              n: 1,
+              size: "512x512",
             });
-            var dalimg = response.data.data[0].url
-            console.log(`${response.data.data}`)
-            conn.sendMesaage(from, { image: { url: dalimg }, caption: 'Nich Kack' }, { quoted:ftroli })
+		reply('_Memuat pencarian Ai_')
+            console.log(`${response.data.data[0].url}`)
+            conn.sendMesaage(from, { image: { url: response.data.data[0].url }, caption: 'Nich Kack' }, { quoted:ftroli })
             } catch (err) {
             reply('Sepertinya gambar yang kamu cari sulit untuk dimengerti oleh bot.')
             conn.sendMessage('6289519009370@s.whatsapp.net', { text: err }, {quoted:msg})
@@ -5066,10 +5067,14 @@ conn.sendMessage(from, {video:{url:i.url}, caption:`Type : ${i.type}`, mimetype:
           var anime2 = 'sticker/' + getRandom('.png')
           fs.writeFileSync(`./${anime2}`, buffer_anime)
           var { url } = await UploadFileUgu(anime2)
-          var resimgani = await fetchJson(`https://api.ibeng.tech/api/maker/anime?url=${url}&apikey=ibeng`)
-          var imganime = resimgani.extra
-          if (imganime.img_urls.includes('/share/')){
-          conn.sendMessage(from, { image: { url: imganime }, caption: `Nich kack dah jadi anime:v`}, {quoted:msg})}
+          anime.transform({
+	    photo: url,
+	    // To save the image to a specific path
+	    //destinyFolder: './sticker'
+	})
+	.then(data => {
+    	console.log('Image', data);
+	  })
           fs.unlinkSync(anime2)
           fs.unlinkSync(`./sticker/${sender.split("@")[0]}.jpg`)
         } catch (err) {
