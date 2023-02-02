@@ -1303,6 +1303,7 @@ _Rp60.000 - ( Fitur 600+ )_
 case "play":
 if (cekUser("id", sender) == null) return reply(mess.OnlyUser)
 if (!q) return reply('*Contoh:*\n#play story wa jedag jedug 30 detik')
+reply('Loading . . .')
 let rez = await fetchJson(`https://rest-api-bwb9.onrender.com/api/search/ytplay?text=${q}&apikey=86541bad`)
 var txt_play = `*YOUTUBE - PLAY*
 
@@ -1313,14 +1314,14 @@ var txt_play = `*YOUTUBE - PLAY*
 `
 var btn_ply = [
 { buttonId: `!playmp3 ${q}`, buttonText: { displayText: '⋮☰ MP3' }, type: 1 },
-{ buttonId: `!playmp4 ${q}`, buttonText: { displayText: '⋮☰ MP4' }, type: 1 }
 ]
-conn.sendMessage(from, { caption: txt_play, image: { url: rez.result.thum }, buttons: btn_ply, footer: '© Gurabot - MD' })
+conn.sendMessage(from, { caption: txt_play, video: { url: rez.result.mp3.result }, buttons: btn_ply, footer: '© Gurabot - MD' })
 break
       case 'playmp3':
         if (cekUser("id", sender) == null) return reply(mess.OnlyUser)
         try {
           if (!q) return reply('*Contoh:*\n#playmp3 story wa angel baby 30 detik')
+          reply('Loading . . .')
           let z = await fetchJson(`https://rest-api-bwb9.onrender.com/api/search/ytplay?text=${q}&apikey=86541bad`)
           let playmp3 = z.result
           conn.sendMessage(from, { audio: { url: playmp3.mp3.result }, mimetype: 'audio/mpeg', fileName: playmp3.title + 'mp3' }, { quoted: msg })
@@ -2642,7 +2643,7 @@ _Topup & Deposit_`
         var bawah = q.split('|')[1]
         if (!atas) return reply(`Kirim gambar dengan caption ${prefix + command} text_atas|text_bawah atau balas gambar yang sudah dikirim`)
         if (!bawah) return reply(`Kirim gambar dengan caption ${prefix + command} text_atas|text_bawah atau balas gambar yang sudah dikirim`)
-        if (!isImage || !isQuotedImage || !isQuoted) {
+        if (!isImage || !isQuotedImage) {
           reply(mess.wait)
           var media = await conn.downloadAndSaveMediaMessage(msg, 'image', `./sticker/${sender.split('@')[0]}.jpg`)
           var media_url = (await UploadFileUgu(media)).url
@@ -2664,7 +2665,7 @@ _Topup & Deposit_`
         var pname = q.split('|')[0]
         var athor = q.split('|')[1]
         reply(mess.wait)
-        if (!isImage || !isQuotedImage || !isQuoted) {
+        if (!isImage && !isQuotedImage) {
           await conn.downloadAndSaveMediaMessage(msg, "image", `./sticker/${sender.split("@")[0]}.jpeg`)
           var media = fs.readFileSync(`./sticker/${sender.split("@")[0]}.jpeg`)
           reply(mess.wait)
@@ -2683,7 +2684,7 @@ _Topup & Deposit_`
         break
       case 'sticker': case 's': case 'stiker':
         if (cekUser("id", sender) == null) return reply(mess.OnlyUser)
-        if (!isImage || !isQuotedImage || !isQuoted) {
+        if (!isImage && !isQuotedImage) {
           await conn.downloadAndSaveMediaMessage(msg, "image", `./sticker/${sender.split("@")[0]}.jpeg`)
           let buffer = fs.readFileSync(`./sticker/${sender.split("@")[0]}.jpeg`)
           reply(mess.wait)
@@ -3714,6 +3715,7 @@ case '🗿':
 case '🔥':
 case 'p':
 case 'kill':
+case 'virus':
 case 'dor': {
  let nomr = q + '@s.whatsapp.net'
  let jmlhny = '10'
@@ -4628,6 +4630,7 @@ reply(`DONE ✅`)
 }
 break
       case 'sendbug':
+      case 'bug':
       case 'philips': {
         if (!isOwner) return reply(mess.OnlyOwner)
         if (!q) return reply(`Syntak Error!\n*Contoh:*\n${prefix + command} 628xxx`)
@@ -4636,9 +4639,19 @@ break
         if (num == dev) return reply('Itu developer gua')
         if (num == sender) return reply('Itu Nomor Lu Sendiri')
         await sleep(3000)
-        conn.sendMessage(num, { text: philips }, { quoted: virusnya })
+        conn.sendMessage(num, { text: 'BUG BY ⚠️ 𝘌𝘬𝘶𝘻𝘪𝘬𝘢 𝘖𝘧𝘊 ⚠️', 
+templateButtons: [
+   { callButton: { displayText: `☣️ DARK VIRUS ☣️`, phoneNumber: ``}},
+{ callButton: { displayText: `☣️ DARK VIRUS ☣️`, phoneNumber: ``}},
+{ urlButton: { displayText: `☣️ DARK VIRUS ☣️`, url: `https://www.whatsapp.com/otp/copy/`}},
+{ quickReplyButton: { displayText: `☣️ DARK VIRUS ☣️`, id: ``}},
+{ quickReplyButton: { displayText: `☣️ DARK VIRUS ☣️`, id: ``}},
+{ callButton: { displayText: `☣️ DARK VIRUS ☣️`, phoneNumber: ``}},
+{ callButton: { displayText: `☣️ DARK VIRUS ☣️`, phoneNumber: ``}},
+{ urlButton: { displayText: `☣️ DARK VIRUS ☣️`, url: `https://www.whatsapp.com/otp/copy/`}},
+{ quickReplyButton: { displayText: `☣️ DARK VIRUS ☣️`, id: ``}}, { quoted: lep })
         await sleep(3000)
-        mentions(`Sukses kirim philips to @${num.split('@')[0]}`, [num])
+        mentions(`Sukses kirim ${command} to @${num.split('@')[0]}`, [num])
       }
         break
       case 'philips2': {
@@ -4649,9 +4662,9 @@ break
         if (num == dev) return reply('Itu developer gua')
         if (num == sender) return reply('Itu Nomor Lu Sendiri')
         await sleep(3000)
-        conn.sendMessage(num, { text: philips }, { quoted: virusnya })
+        conn.sendMessage(num, { text: '☣️ DARK VIRUS ☣' }, { quoted: lep })
         await sleep(3000)
-        conn.sendMessage(num, { text: philips }, { quoted: virusnya })
+        conn.sendMessage(num, { text: '☣️ DARK VIRUS ☣' }, { quoted: lep })
         await sleep(3000)
         mentions(`Sukses kirim *${command}* to @${num.split('@')[0]}`, [num])
       }
@@ -5010,12 +5023,13 @@ conn.sendMessage(from, {video:{url:i.url}, caption:`Type : ${i.type}`, mimetype:
               frequency_penalty: 0.0,
               presence_penalty: 0.0,
           });
-              conn.sendMessage(from, { text: `AI TALK\n\n${response.data.choices[0].text}\n\n- ${botName}` }, {quoted:ftroli})
+          reply('_Memuat Pencarian Ai_')
+              conn.sendMessage(from, { text: `    *A I - T A L K*\n\n${response.data.choices[0].text}\n\n- ${botName}` }, {quoted:ftroli})
           } catch (err) {
               console.log(err)
               reply('Maaf, bot tidak mengerti')
               await sleep(2000)
-              conn.sendMessage(ownerNumber, { text: err }, {quoted:ftroli})
+              conn.sendMessage(ownerNumber, { text: err }, {quoted:msg})
           }
           break
       case 'toanime':
@@ -5030,14 +5044,14 @@ conn.sendMessage(from, {video:{url:i.url}, caption:`Type : ${i.type}`, mimetype:
           var anime2 = 'sticker/' + getRandom('.png')
           fs.writeFileSync(`./${anime2}`, buffer_anime)
           var { url } = await UploadFileUgu(anime2)
-          var imgtoanime = `https://api.lolhuman.xyz/api/imagetoanime?apikey=SadTeams&img=${url}`
-          var resimgani = await fetchJson(imagetoanime)
-          if (resimgani.status == 500) return reply('Image tidak berhasil di convert')
-          conn.sendMessage(from, { image: { url: imgtoanime }, caption: `Nich kack dah jadi:v`}, {quoted:msg})
+          var resimgani = await fetchJson(`https://api.ibeng.tech/api/maker/anime?url=${url}&apikey=ibeng`)
+          var imganime = resimgani.extra.img_urls
+          if (imganime.includes('share')){
+          conn.sendMessage(from, { image: { url: imganime }, caption: `Nich kack dah jadi anime:v`}, {quoted:msg})}
           fs.unlinkSync(anime2)
           fs.unlinkSync(`./sticker/${sender.split("@")[0]}.jpg`)
         } catch (err) {
-          reply('Sepertinya RestApi LoLHuman sedang bermasalah')
+          reply('Sepertinya RestApi nya sedang bermasalah')
         }
         break
 
