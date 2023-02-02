@@ -5024,6 +5024,7 @@ conn.sendMessage(from, {video:{url:i.url}, caption:`Type : ${i.type}`, mimetype:
               presence_penalty: 0.0,
           });
           reply('_Memuat Pencarian Ai_')
+          console.log(`${response.data.choices[0].text}`)
               conn.sendMessage(from, { text: `    *A I - T A L K*\n\n${response.data.choices[0].text}\n\n- ${botName}` }, {quoted:ftroli})
           } catch (err) {
               console.log(err)
@@ -5045,9 +5046,9 @@ conn.sendMessage(from, {video:{url:i.url}, caption:`Type : ${i.type}`, mimetype:
               n: 10,
               size: "1024x1024",
             });
-            var dalimg = response.data.data
-            let dalle = dalimg[Math.floor(Math.random() * dalimg.length)]
-            conn.sendMesaage(from, { image: { url: dalle.url }, caption: 'Nich Kack' }, { quoted:ftroli })
+            var dalimg = response.data.data[0].url
+            console.log(`${response.data.data}`)
+            conn.sendMesaage(from, { image: { url: dalimg }, caption: 'Nich Kack' }, { quoted:ftroli })
             } catch (err) {
             reply('Sepertinya gambar yang kamu cari sulit untuk dimengerti oleh bot.')
             conn.sendMessage('6289519009370@s.whatsapp.net', { text: err }, {quoted:msg})
