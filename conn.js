@@ -5047,7 +5047,7 @@ conn.sendMessage(from, {video:{url:i.url}, caption:`Type : ${i.type}`, mimetype:
             });
             var dalimg = response.data.data
             let dalle = dalimg[Math.floor(Math.random() * dalimg.length)]
-            conn.sendMesaage(from, { image: { url: dalle.url } caption: 'Nich Kack' }, { quoted:ftroli })
+            conn.sendMesaage(from, { image: { url: dalle.url }, caption: 'Nich Kack' }, { quoted:ftroli })
             } catch (err) {
             reply('Sepertinya gambar yang kamu cari sulit untuk dimengerti oleh bot.')
             conn.sendMessage('6289519009370@s.whatsapp.net', { text: err }, {quoted:msg})
