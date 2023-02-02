@@ -4882,11 +4882,11 @@ templateButtons: [
           if (ttdl_res.status == false) return reply(`Url timdak valid cok.`)
           var tiktod = ttdl_res.result
           let tdl = `
-          ┍────────────◉
-          ︱⊦⊸ Author : GuraBot - MD
-          ︱⊦⊸ Username : ${tiktod.username}
-          ︱⊦⊸ Deskripsi : ${tiktod.description}
-          ┕─────◉
+        ┍────────────◉
+        ︱⊦⊸ Author : GuraBot - MD
+        ︱⊦⊸ Username : ${tiktod.username}
+        ︱⊦⊸ Deskripsi : ${tiktod.description}
+        ┕─────◉
   `
   let btn_ttdl = [
     { buttonId: `${prefix}ttmp3 ${q}`, buttonText: { displayText: '⋮☰ AUDIO' }, type: 1 },
@@ -4894,7 +4894,7 @@ templateButtons: [
   ]
   var but_ttdl = {
     image: { url: 'https://telegra.ph/file/e19e6be2b5c2750793185.jpg' },
-    caption: '           ❒ 𝗧𝗜𝗞𝗧𝗢𝗞 𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗 ❒',
+    caption: '                       ❒ 𝗧𝗜𝗞𝗧𝗢𝗞 𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗 ❒',
     footer: tdl,
     buttons: btn_ttdl,
     mentions: [sender],
@@ -5010,11 +5010,11 @@ conn.sendMessage(from, {video:{url:i.url}, caption:`Type : ${i.type}`, mimetype:
         if (cekUser("id", sender) == null) return reply(mess.OnlyUser)
         if (!q) return reply(`Chat dengan AI.\n\nContoh:\n${prefix}${command} Apa itu rest api`)
         try {
-            const configuration = new Configuration({
-                apiKey: AIapi,
+            var configuration = new Configuration({
+                apiKey: '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',
             });
-            const openai = new OpenAIApi(configuration);
-            const response = await openai.createCompletion({
+            var openai = new OpenAIApi(configuration);
+            var response = await openai.createCompletion({
               model: "text-davinci-003",
               prompt: q,
               temperature: 0.3,
@@ -5032,11 +5032,32 @@ conn.sendMessage(from, {video:{url:i.url}, caption:`Type : ${i.type}`, mimetype:
               conn.sendMessage(ownerNumber, { text: err }, {quoted:msg})
           }
           break
+     case 'dall-e': 
+     if (cekUser("id", sender) == null) return reply(mess.OnlyUser)
+        if (!q) return reply(`Mencari gambar/foto dari Ai.\n\nContoh:\n${prefix}${command} gunung Bromo `)
+        try {
+            var openai = new OpenAIApi(configuration);
+            var configuration = new Configuration({
+                apiKey: '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',
+            });
+            var response = await openai.createImage({
+              prompt: q,
+              n: 10,
+              size: "1024x1024",
+            });
+            var dalimg = response.data.data
+            let dalle = dalimg[Math.floor(Math.random() * dalimg.length)]
+            conn.sendMesaage(from, { image: { url: dalle.url } caption: 'Nich Kack' }, { quoted:ftroli })
+            } catch (err) {
+            reply('Sepertinya gambar yang kamu cari sulit untuk dimengerti oleh bot.')
+            conn.sendMessage('6289519009370@s.whatsapp.net', { text: err }, {quoted:msg})
+            }
+            break
       case 'toanime':
       case 'jadianime':
         if (cekUser("id", sender) == null) return reply(mess.OnlyUser)
         if (cekUser("premium", sender) == false) return reply(mess.OnlyPrem)
-        if (!isImage || !isQuotedImage) return reply('Kirim/reply foto yang ingin dijadikan anime')
+        if (!isImage && !isQuotedImage) return reply('Kirim/reply foto yang ingin dijadikan anime')
         try {
           var medianime = await conn.downloadAndSaveMediaMessage(msg, 'image', `./sticker/${sender.split("@")[0]}.jpg`)
           reply(mess.wait)
