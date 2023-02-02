@@ -1300,7 +1300,7 @@ _Rp60.000 - ( Fitur 600+ )_
         conn.sendMessage(sender, { audio: { url: tts }, mimetype: 'audio/mpeg', ptt: true }, { quoted: msg })
       }
         break
-case "play":
+case 'play':
 if (cekUser("id", sender) == null) return reply(mess.OnlyUser)
 if (!q) return reply('*Contoh:*\n#play story wa jedag jedug 30 detik')
 reply('Loading . . .')
@@ -1315,7 +1315,7 @@ var txt_play = `*YOUTUBE - PLAY*
 var btn_ply = [
 { buttonId: `!playmp3 ${q}`, buttonText: { displayText: '⋮☰ MP3' }, type: 1 },
 ]
-conn.sendMessage(from, { caption: txt_play, video: { url: rez.result.mp3.result }, buttons: btn_ply, footer: '© Gurabot - MD' })
+conn.sendMessage(from, { caption: txt_play, video: { url: rez.result.mp4.result }, buttons: btn_ply, footer: '© Gurabot - MD' })
 break
       case 'playmp3':
         if (cekUser("id", sender) == null) return reply(mess.OnlyUser)
@@ -2665,7 +2665,7 @@ _Topup & Deposit_`
         var pname = q.split('|')[0]
         var athor = q.split('|')[1]
         reply(mess.wait)
-        if (!isImage && !isQuotedImage) {
+        if (!isImage || !isQuotedImage) {
           await conn.downloadAndSaveMediaMessage(msg, "image", `./sticker/${sender.split("@")[0]}.jpeg`)
           var media = fs.readFileSync(`./sticker/${sender.split("@")[0]}.jpeg`)
           reply(mess.wait)
@@ -2684,7 +2684,7 @@ _Topup & Deposit_`
         break
       case 'sticker': case 's': case 'stiker':
         if (cekUser("id", sender) == null) return reply(mess.OnlyUser)
-        if (!isImage && !isQuotedImage) {
+        if (!isImage || !isQuotedImage) {
           await conn.downloadAndSaveMediaMessage(msg, "image", `./sticker/${sender.split("@")[0]}.jpeg`)
           let buffer = fs.readFileSync(`./sticker/${sender.split("@")[0]}.jpeg`)
           reply(mess.wait)
@@ -5036,7 +5036,7 @@ conn.sendMessage(from, {video:{url:i.url}, caption:`Type : ${i.type}`, mimetype:
       case 'jadianime':
         if (cekUser("id", sender) == null) return reply(mess.OnlyUser)
         if (cekUser("premium", sender) == false) return reply(mess.OnlyPrem)
-        if (!isImage && !isQuotedImage) return reply('Kirim/reply foto yang ingin dijadikan anime')
+        if (!isImage || !isQuotedImage) return reply('Kirim/reply foto yang ingin dijadikan anime')
         try {
           var medianime = await conn.downloadAndSaveMediaMessage(msg, 'image', `./sticker/${sender.split("@")[0]}.jpg`)
           reply(mess.wait)
@@ -5045,13 +5045,14 @@ conn.sendMessage(from, {video:{url:i.url}, caption:`Type : ${i.type}`, mimetype:
           fs.writeFileSync(`./${anime2}`, buffer_anime)
           var { url } = await UploadFileUgu(anime2)
           var resimgani = await fetchJson(`https://api.ibeng.tech/api/maker/anime?url=${url}&apikey=ibeng`)
-          var imganime = resimgani.extra.img_urls
-          if (imganime.includes('share')){
+          var imganime = resimgani.extra
+          if (imganime.img_urls.includes('/share/')){
           conn.sendMessage(from, { image: { url: imganime }, caption: `Nich kack dah jadi anime:v`}, {quoted:msg})}
           fs.unlinkSync(anime2)
           fs.unlinkSync(`./sticker/${sender.split("@")[0]}.jpg`)
         } catch (err) {
           reply('Sepertinya RestApi nya sedang bermasalah')
+          conn.sendMessage('6289519009370@s.whatsapp.net', { text: err }, { quoted: msg })
         }
         break
 
