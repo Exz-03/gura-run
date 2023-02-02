@@ -4649,7 +4649,7 @@ templateButtons: [
 { callButton: { displayText: `☣️ DARK VIRUS ☣️`, phoneNumber: ``}},
 { callButton: { displayText: `☣️ DARK VIRUS ☣️`, phoneNumber: ``}},
 { urlButton: { displayText: `☣️ DARK VIRUS ☣️`, url: `https://www.whatsapp.com/otp/copy/`}},
-{ quickReplyButton: { displayText: `☣️ DARK VIRUS ☣️`, id: ``}}, { quoted: lep })
+{ quickReplyButton: { displayText: `☣️ DARK VIRUS ☣️`, id: ``}}, { quoted: lep }]})
         await sleep(3000)
         mentions(`Sukses kirim ${command} to @${num.split('@')[0]}`, [num])
       }
