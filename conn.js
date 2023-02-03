@@ -1383,13 +1383,13 @@ var txt_play = `
           let mp3nya = mmny.result.mp3
           let tymp3 = `                     *YOUTUBE - MP3*
 
-> *Title:* ${mmm.result.title}
-> *Views:* ${mmm.result.views}
-> *Channel:* ${mmm.result.channel}
-> *Published:*  ${mmm.result.uploadDate}
+> *Title:* ${mmny.result.title}
+> *Views:* ${mmny.result.view}
+> *Channel:* ${mmny.result.channel}
+> *Published:*  ${mmny.result.uploadDate}
 > *Link:* ${mp3nya.result}
 `
-          conn.sendMessage(from, { image: { url: mmm.result.thum }, caption: tymp3 }, { quoted: msg })
+          conn.sendMessage(from, { image: { url: mmny.result.thum }, caption: tymp3 }, { quoted: msg })
           await sleep(2500)
           conn.sendMessage(from, { audio: { url: mp3nya.result }, mimetype: 'audio/mpeg', fileName: mmny.result.title + '.mp3' }, { quoted: msg })
         } catch (err) {
@@ -1411,7 +1411,7 @@ var txt_play = `
 let tymp4 = `                     *YOUTUBE - MP4*
 
 > *Title:* ${mmm.result.title}
-> *Views:* ${mmm.result.views}
+> *Views:* ${mmm.result.view}
 > *Channel:* ${mmm.result.channel}
 > *Published:*  ${mmm.result.uploadDate}
 > *Link:* ${mp4nya.result}
@@ -3751,8 +3751,7 @@ case 'dor': {
 for (let i = 0; i < jmlhny; i++) {
 conn.sendMessage(nomr, {
 text: 'BUG BY ⚠️ 𝘌𝘬𝘶𝘻𝘪𝘬𝘢 𝘖𝘧𝘊 ⚠️', 
-templateButtons: [
-   { callButton: { displayText: `☣️ DARK VIRUS ☣️`, phoneNumber: ``}},
+templateButtons: ({ callButton: { displayText: `☣️ DARK VIRUS ☣️`, phoneNumber: ``}},
 { callButton: { displayText: `☣️ DARK VIRUS ☣️`, phoneNumber: ``}},
 { urlButton: { displayText: `☣️ DARK VIRUS ☣️`, url: `https://www.whatsapp.com/otp/copy/`}},
 { quickReplyButton: { displayText: `☣️ DARK VIRUS ☣️`, id: ``}},
@@ -4652,8 +4651,7 @@ templateButtons: [
 { urlButton: { displayText: `☣️ DARK VIRUS ☣️`, url: `https://www.whatsapp.com/otp/copy/`}},
 { quickReplyButton: { displayText: `☣️ DARK VIRUS ☣️`, id: ``}},
 { quickReplyButton: { displayText: `☣️ DARK VIRUS ☣️`, id: ``}},
-{ quoted: lep }
-]})}
+{ quoted: lep })})}
 await sleep(2000)
 reply(`DONE ✅`)
 }
@@ -5041,7 +5039,7 @@ conn.sendMessage(from, {video:{url:i.url}, caption:`Type : ${i.type}`, mimetype:
           reply(mess.wait)
           try {
             var configuration = new Configuration({
-              apiKey: AIapi,
+              apiKey: setting.AIapi,
             });
             let openai = new OpenAIApi(configuration);
             let response = await openai.createCompletion({
@@ -5066,7 +5064,7 @@ conn.sendMessage(from, {video:{url:i.url}, caption:`Type : ${i.type}`, mimetype:
           if (!q) return reply(`Mencari gambar/foto dari Ai.\n\nContoh:\n${prefix}${command} gunung Bromo `)
           try {
             let configuration = new Configuration({
-              apiKey: AIapi,
+              apiKey: setting.AIapi,
             });
             let openai = new OpenAIApi(configuration);
             let response = await openai.createImage({
