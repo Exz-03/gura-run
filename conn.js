@@ -49,7 +49,9 @@ const speed = require('performance-now')
 const { performance } = require('perf_hooks')
 const { sizeFormatter } = require("human-readable");
 const { Configuration, OpenAIApi } = require("openai")
-const anime = require('selfieToAnime');
+const jdanime = require('selfietoanime');
+const AI2D = require('@arugaz/ai2d')
+
 
 const msgFilter = require("./function/func_Spam");
 const { stalkff, stalkml } = require("./function/func_Stalker");
@@ -1301,23 +1303,29 @@ _Rp60.000 - ( Fitur 600+ )_
         conn.sendMessage(sender, { audio: { url: tts }, mimetype: 'audio/mpeg', ptt: true }, { quoted: msg })
       }
         break
-case 'play':
-if (cekUser("id", sender) == null) return reply(mess.OnlyUser)
-if (!q) return reply('*Contoh:*\n#play story wa jedag jedug 30 detik')
-reply('Loading . . .')
-let rez = await fetchJson(`https://rest-api-bwb9.onrender.com/api/search/ytplay?text=${q}&apikey=86541bad`)
-var txt_play = `*YOUTUBE - PLAY*
-
-*Title:* ${rez.result.title}
-*Channel:* ${rez.result.channel}
-*Published:* ${rez.result.uploadDate}
-*Views:* ${rez.result.view}
+        case 'play':
+          if (cekUser("id", sender) == null) return reply(mess.OnlyUser)
+          if (!q) return reply('*Contoh:*\n#play story wa jedag jedug 30 detik')
+          reply('Loading . . .')
+          let rez = await fetchJson(`https://api.ibeng.tech/api/yt/search?query=${q}&apikey=ibeng`)
+          console.log(rez)
+          if (rez.result[0].type == 'channel') return reply('Silahkan cari dengan kata kunci lain.')
+var txt_play = `
+                *YOUTUBE - PLAY*
+  
+> *Title:* ${rez.result[0].title}
+> *Channel:* ${rez.result[0].author.url}
+> *Published:* ${rez.result[0].ago}
+> *Views:* ${rez.result[0].views}
+> *Duration:* ${rez.result[0].timestamp}
+> *Link:* ${rez.result[0].url}
 `
-var btn_ply = [
-{ buttonId: `!playmp3 ${q}`, buttonText: { displayText: '⋮☰ MP3' }, type: 1 },
-]
-conn.sendMessage(from, { caption: txt_play, video: { url: rez.result.mp4.result }, buttons: btn_ply, footer: '© Gurabot - MD' })
-break
+          let resbuf = await fetchJson(`https://rest-api-bwb9.onrender.com/api/dowloader/yt?url=${rez.result[0].url}&apikey=86541bad`)
+          var btn_ply = [
+            { buttonId: `!ytmp3 ${rez.result[0].url}`, buttonText: { displayText: '⋮☰ PLAY MP3' }, type: 1 },
+          ]
+          conn.sendMessage(from, { caption: txt_play, video: { url: resbuf.result.mp4.result }, buttons: btn_ply, footer: '© Gurabot - MD' })
+          break
       case 'playmp3':
         if (cekUser("id", sender) == null) return reply(mess.OnlyUser)
         try {
@@ -1388,9 +1396,20 @@ break
         if (mmm.status == false) return reply('Url yang anda masukan tidak valid!')
         console.log(mmm.result)
         let mp4nya = mmm.result.mp4
-        conn.sendMessage(from, { video: { url: mp4nya.result }, caption: 'Done...' }, { quoted: msg })
+        var btn_mp4 = [
+          { buttonId: `!ytmp3 ${q}`, buttonText: { displayText: '⋮☰ PLAY MP3' }, type: 1 },
+        ]
+let tymp4 = `                     *YOUTUBE - MP4*
+
+> *Title:* ${mmm.result.title}
+> *Views:* ${mmm.result.views}
+> *Channel:* ${mmm.result.channel}
+> *Published:*  ${mmm.result.uploadDate}
+> *Link:* ${mp4nya.result}
+`
+        conn.sendMessage(from, { caption: tymp4, video: { url: mp4nya.result }, buttons: btn_mp4, footer: '© Gurabot - MD' })
         } catch (err) {
-        reply(err)
+        reply('Url yang anda masukan/Rest api mungkin error!')
         }
         break
       case 'mediafire':
@@ -5007,14 +5026,16 @@ conn.sendMessage(from, {video:{url:i.url}, caption:`Type : ${i.type}`, mimetype:
         }
         conn.sendMessage(from, but_menu, { quoted: msg })
         break
-      case 'ai':
-        if (cekUser("id", sender) == null) return reply(mess.OnlyUser)
-        if (!q) return reply(`Chat dengan AI.\n\nContoh:\n${prefix}${command} Apa itu rest api`)
-        try {
+        case 'ai':
+          if (cekUser("id", sender) == null) return reply(mess.OnlyUser)
+          if (!q) return reply(`Chat dengan AI.\n\nContoh:\n${prefix}${command} Apa itu rest api`)
+          reply(mess.wait)
+          try {
             var configuration = new Configuration({
-                apiKey: AIapi,
+              apiKey: AIapi,
             });
-            const response = await openai.createCompletion({
+            let openai = new OpenAIApi(configuration);
+            let response = await openai.createCompletion({
               model: "text-davinci-003",
               prompt: q,
               temperature: 0.3,
@@ -5023,67 +5044,65 @@ conn.sendMessage(from, {video:{url:i.url}, caption:`Type : ${i.type}`, mimetype:
               frequency_penalty: 0.0,
               presence_penalty: 0.0,
             });
-          reply('_Memuat Pencarian Ai_')
-          console.log(`${response.data.choices[0].text}`)
-              conn.sendMessage(from, { text: `    *A I - T A L K*\n\n${response.data.choices[0].text}\n\n- ${botName}` }, {quoted:ftroli})
+            conn.sendMessage(from, { text: `                *A I - T A L K*\n${response.data.choices[0].text}\n\n- ${botName}` }, { quoted: ftroli })
           } catch (err) {
-              console.log(err)
-              reply('Maaf, bot tidak mengerti')
-              await sleep(2000)
-              conn.sendMessage(ownerNumber, { text: err }, {quoted:msg})
+            console.log(err)
+            reply('Maaf, bot tidak mengerti')
+            await sleep(2000)
+            conn.sendMessage(ownerNumber, { text: err }, { quoted: msg })
           }
           break
-     case 'dall-e': 
-     if (cekUser("id", sender) == null) return reply(mess.OnlyUser)
-        if (!q) return reply(`Mencari gambar/foto dari Ai.\n\nContoh:\n${prefix}${command} gunung Bromo `)
-        try {
-            var openai = new OpenAIApi(configuration);
-            var configuration = new Configuration({
-                apiKey: AIapi,
+        case 'dall-e':
+          if (cekUser("id", sender) == null) return reply(mess.OnlyUser)
+          if (!q) return reply(`Mencari gambar/foto dari Ai.\n\nContoh:\n${prefix}${command} gunung Bromo `)
+          try {
+            let configuration = new Configuration({
+              apiKey: AIapi,
             });
-            const openai = new OpenAIApi(configuration);
-            const response = await openai.createImage({
+            let openai = new OpenAIApi(configuration);
+            let response = await openai.createImage({
               prompt: q,
-              n: 1,
-              size: "512x512",
+              n: 2,
+              size: "1024x1024",
             });
-		reply('_Memuat pencarian Ai_')
             console.log(`${response.data.data[0].url}`)
-            conn.sendMesaage(from, { image: { url: response.data.data[0].url }, caption: 'Nich Kack' }, { quoted:ftroli })
-            } catch (err) {
-            reply('Sepertinya gambar yang kamu cari sulit untuk dimengerti oleh bot.')
-            conn.sendMessage('6289519009370@s.whatsapp.net', { text: err }, {quoted:msg})
-            }
-            break
-      case 'toanime':
-      case 'jadianime':
-        if (cekUser("id", sender) == null) return reply(mess.OnlyUser)
-        if (cekUser("premium", sender) == false) return reply(mess.OnlyPrem)
-        if (!isImage && !isQuotedImage) return reply('Kirim/reply foto yang ingin dijadikan anime')
-        try {
+            conn.sendImage(from, `${response.data.data[0].url}`, `Nich Kack\n*_${q}_*`, ftroli)
+          } catch (err) {
+            reply(err)
+          }
+          break
+        case 'toanime':
+        case 'jadianime':
+          if (cekUser("id", sender) == null) return reply(mess.OnlyUser)
+          if (cekUser("premium", sender) == false) return reply(mess.OnlyPrem)
+          if (!isImage && !isQuotedImage) return reply('Kirim/reply foto yang ingin dijadikan anime')
+          const path = require('path');
           var medianime = await conn.downloadAndSaveMediaMessage(msg, 'image', `./sticker/${sender.split("@")[0]}.jpg`)
           reply(mess.wait)
           let buffer_anime = fs.readFileSync(medianime)
           var anime2 = 'sticker/' + getRandom('.png')
           fs.writeFileSync(`./${anime2}`, buffer_anime)
           var { url } = await UploadFileUgu(anime2)
-          anime.transform({
-	    photo: url,
-	    // To save the image to a specific path
-	    //destinyFolder: './sticker'
-	})
-	.then(data => {
-    	console.log('Image', data);
-	  })
+          const { JadiAnime } = require('jadianime-ts')
+          try {
+            let opip = {
+              // You can use proxy option if QQ banned your region.
+              proxy: "socks5://58.49.230.248:30001", // https or socks5
+              qqmode: 'world' // Use China or World
+              // You must use china proxy if using qqmode china
+            }
+            let image = await JadiAnime(url, opip)
+            console.log(image)
+            if (image.code != 200) return reply('Foto gagal di convert')
+            conn.sendMessage(from, { image: { url: image.img }, caption: 'Nich dah jadi anime kack:v' }, { quoted: msg })
+          } catch (e) {
+            console.log(e)
+          }
           fs.unlinkSync(anime2)
           fs.unlinkSync(`./sticker/${sender.split("@")[0]}.jpg`)
-        } catch (err) {
-          reply('Sepertinya RestApi nya sedang bermasalah')
-          conn.sendMessage('6289519009370@s.whatsapp.net', { text: err }, { quoted: msg })
-        }
-        break
+          break
 
-
+        
       default:
 
         /*━━━━━━━[ Function Menfess ]━━━━━━━*/
