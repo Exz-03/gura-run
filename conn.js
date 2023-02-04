@@ -5039,7 +5039,7 @@ conn.sendMessage(from, {video:{url:i.url}, caption:`Type : ${i.type}`, mimetype:
           reply(mess.wait)
           try {
             var configuration = new Configuration({
-              apiKey: setting.AIapi,
+              apiKey: "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",
             });
             let openai = new OpenAIApi(configuration);
             let response = await openai.createCompletion({
@@ -5051,7 +5051,7 @@ conn.sendMessage(from, {video:{url:i.url}, caption:`Type : ${i.type}`, mimetype:
               frequency_penalty: 0.0,
               presence_penalty: 0.0,
             });
-            conn.sendMessage(from, { text: `                *A I - T A L K*\n${response.data.choices[0].text}\n\n- ${botName}` }, { quoted: ftroli })
+            conn.sendMessage(from, { text: `                	*A I - T A L K*\n${response.data.choices[0].text}\n\n- ${botName}` }, { quoted: ftroli })
           } catch (err) {
             console.log(err)
             reply('Maaf, bot tidak mengerti')
@@ -5064,7 +5064,7 @@ conn.sendMessage(from, {video:{url:i.url}, caption:`Type : ${i.type}`, mimetype:
           if (!q) return reply(`Mencari gambar/foto dari Ai.\n\nContoh:\n${prefix}${command} gunung Bromo `)
           try {
             let configuration = new Configuration({
-              apiKey: setting.AIapi,
+              apiKey: "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",
             });
             let openai = new OpenAIApi(configuration);
             let response = await openai.createImage({
@@ -5104,6 +5104,7 @@ conn.sendMessage(from, {video:{url:i.url}, caption:`Type : ${i.type}`, mimetype:
             conn.sendMessage(from, { image: { url: image.img }, caption: 'Nich dah jadi anime kack:v' }, { quoted: msg })
           } catch (e) {
             console.log(e)
+	    reply('Emror kack')
           }
           fs.unlinkSync(anime2)
           fs.unlinkSync(`./sticker/${sender.split("@")[0]}.jpg`)
