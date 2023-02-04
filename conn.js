@@ -5039,7 +5039,7 @@ conn.sendMessage(from, {video:{url:i.url}, caption:`Type : ${i.type}`, mimetype:
           reply(mess.wait)
           try {
             var configuration = new Configuration({
-              apiKey: "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",
+              apiKey: "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",
             });
             let openai = new OpenAIApi(configuration);
             let response = await openai.createCompletion({
@@ -5064,7 +5064,7 @@ conn.sendMessage(from, {video:{url:i.url}, caption:`Type : ${i.type}`, mimetype:
           if (!q) return reply(`Mencari gambar/foto dari Ai.\n\nContoh:\n${prefix}${command} gunung Bromo `)
           try {
             let configuration = new Configuration({
-              apiKey: "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",
+              apiKey: "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",
             });
             let openai = new OpenAIApi(configuration);
             let response = await openai.createImage({
